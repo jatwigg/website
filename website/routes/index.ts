@@ -14,3 +14,7 @@ export function about(req: express.Request, res: express.Response) {
 export function contact(req: express.Request, res: express.Response) {
     res.render('contact', { title: 'Contact', year: new Date().getFullYear(), message: 'Your contact page' });
 };
+
+export function stats(req: express.Request, res: express.Response) {
+    res.render('stats', { title: 'Stats', year: new Date().getFullYear(), message: 'Server stats page' });
+};
