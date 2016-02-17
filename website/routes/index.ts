@@ -16,5 +16,5 @@ export function contact(req: express.Request, res: express.Response) {
 };
 
 export function stats(req: express.Request, res: express.Response) {
-    res.render('stats', { title: 'Stats', year: new Date().getFullYear(), message: 'Server stats page' });
+    res.render('stats', { title: 'Stats', year: new Date().getFullYear(), message: 'Server stats page', statdata: { length: 4, stuff: ['one', 'two', 'three', 'four'] } });
 };

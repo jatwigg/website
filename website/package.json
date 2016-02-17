@@ -8,6 +8,7 @@
     "email": ""
   },
   "dependencies": {
+    "chart.js": "^1.0.2",
     "express": "3.4.4",
     "jade": "*",
     "stylus": "*"
