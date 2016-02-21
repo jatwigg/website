@@ -16,6 +16,7 @@ export function contact(req: express.Request, res: express.Response) {
 };
 
 export function stats(req: express.Request, res: express.Response) {
+
     var stuff = [
         {
             name: 'One',

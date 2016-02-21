@@ -25,6 +25,8 @@ if ('development' == app.get('env')) {
     app.use(express.errorHandler());
 }
 
+app.locals.statmachine = new StatMachine();
+
 app.get('/', routes.index);
 app.get('/about', routes.about);
 app.get('/contact', routes.contact);
