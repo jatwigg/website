@@ -7,7 +7,16 @@ block content
   - var noOfLines = 2;
   - var size = (100 / (statdata.length / noOfLines))
   each item, i in stuff
-    div(style='width: '+(size)+'%; height: '+(size)+'%; float: left;')= item+'!'
-        canvas(id='chart'+i)
+    div(style='width: '+(size)+'%; height: '+(size)+'%; float: left;')= item.name+'!'
+      - var chartdata = JSON.stringify(item.data);
+      h1 #{item.name}
+      canvas(id='chart'+i, style='border:1px solid #000;')
+      script(type='text/javascript').
+        $( document ).ready(function(){
+          var ctx = $('#chart#{i}').get(0).getContext('2d');
+          var data = !{chartdata};
+          console.log(data);
+          var doughnut = new Chart(ctx).Doughnut(data);
+        });
 
--//todo: plot stuff ...
+  script(src='/javascripts/Chart.min.js')
