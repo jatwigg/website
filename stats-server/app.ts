@@ -1,5 +1,6 @@
 ﻿import express = require('express');
 import routes = require('./routes/index');
+import user = require('./routes/user');
 import http = require('http');
 import path = require('path');
 
@@ -26,9 +27,7 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
-app.get('/about', routes.about);
-app.get('/contact', routes.contact);
-app.get('/stats', routes.stats);
+app.get('/users', user.list);
 
 http.createServer(app).listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));

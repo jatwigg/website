@@ -3,20 +3,35 @@
 block content
   h2 #{title}
   h3 #{message}
-  - var stuff = statdata.stuff
+  - var servers = statdata.servers
   - var noOfLines = 2;
   - var size = (100 / (statdata.length / noOfLines))
-  each item, i in stuff
+  each item, i in servers
     div(style='width: '+(size)+'%; height: '+(size)+'%; float: left;')= item.name+'!'
-      - var chartdata = JSON.stringify(item.data);
+      - var chartdata = JSON.stringify(item);
       h1 #{item.name}
       canvas(id='chart'+i, style='border:1px solid #000;')
       script(type='text/javascript').
         $( document ).ready(function(){
-          var ctx = $('#chart#{i}').get(0).getContext('2d');
+
+          /* get the data */
           var data = !{chartdata};
-          console.log(data);
-          var doughnut = new Chart(ctx).Doughnut(data);
+          var canvas = $('#chart#{i}').get(0);
+          var ctx = canvas.getContext('2d');
+
+          if (data.isDown) {
+            /* server is down */
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(canvas.width, canvas.height);
+            ctx.moveTo(canvas.width, 0);
+            ctx.lineTo(0, canvas.height);
+            ctx.stroke();
+          }
+          else {
+            /* draw charts */
+            var doughnut = new Chart(ctx).Doughnut(data.mem);
+          }
         });
 
   script(src='/javascripts/Chart.min.js')

@@ -1,69 +1,103 @@
 ﻿/**
  * Thing that polls the remote servers.
- * One instance of this and we just ask it for latest data when we want.
+ * We will new up one instance of this and just ask it for latest data when we want.
  */
 class StatMachine {
-    private _die: boolean = false;
-    private _timer: NodeJS.Timer = null;
-    private _servers: IRemoteServerInfo[];
 
+    private _die: boolean = false;          // indicates end of life for this
+    private _timer: NodeJS.Timer = null;    // timer for querying servers
+    private _servers: IRemoteServerConnection[];  // servers that we will query
+
+    /**
+     * Create an instance.
+     */
     constructor() {
         // todo: we will read data from some file that is in gitignore ...
         this._servers = [{
-            name: 'Local',
             ip: '127.0.0.1',
-            data: this.getDummyData(),
-            isDown: false
+            info: {
+                name: 'Local (test1)',
+                isDown: false,
+                cpu: this.getDummyData(10,10),
+                mem: this.getDummyData(10,100)
+            }
+        },
+        {
+            ip: '127.0.0.1',
+            info: {
+                name: 'Local (test2)',
+                isDown: false,
+                cpu: this.getDummyData(10, 20),
+                mem: this.getDummyData(20, 1000)
+            }
+        },
+        {
+            ip: '127.0.0.1',
+            info: {
+                name: 'Local (test3)',
+                isDown: false,
+                cpu: this.getDummyData(1, 21),
+                mem: this.getDummyData(1, 1000)
+            }
+        },
+        {
+            ip: '127.0.0.1',
+            info: {
+                name: 'Local (test4)',
+                isDown: true,
+                cpu: this.getDummyData(33, 20),
+                mem: this.getDummyData(20, 33)
+            }
         }];
     }
 
     /**
-     * End it all.
+     * End it all. Don't reuse this object once it's been told to die.
      */
     die() {
         this._die = true;
     }
 
     /**
-     * Get an array of servers (without IP addresses) and latest polled data. 
+     * Get an array of servers nd latest polled data. 
      */
     readLatest(): IRemoteServerInfo[] {
         // remove the ip address from server info.
-        return this._servers.map((remote, index, aray) => {
-            return {
-                name: remote.name,
-                ip: ';)',
-                data: remote.data,
-                isDown: false
-            }
-        });;
+        return this._servers.map((remote, index, aray) => remote.info);
     }
 
     /**
-     * 
+     * Queries the remote servers, saves the data then restarts the timer.
      */
     private query() {
+        // stop the timer in case query takes longer than interval.
         if (this._timer != null) {
-            clearInterval(this._timer)
+            clearInterval(this._timer);
         }
-        if (_die) {
+        // if this class has been told to stop, exit method.
+        if (this._die) {
             return;
         }
+        // do the querying
         for (var s in this._servers) {
-
+            //todo: query here
         }
+        // reinstate timer
         this._timer = setInterval(this.query, 5000);
     }
 
-    private getDummyData(): ISingleDataPart[] {
+    /**
+     * Helper for development. Delete this.
+     */
+    private getDummyData(num1: number, num2: number): ISingleDataPart[] {
         return [{
-            value: 10,
+            value: num1,
             color: '#COFFEE',
             highlight: '#0FF1CE',
             label: 'Load'
         },
         {
-            value: 10,
+            value: num2,
             color: '#1CEBA9',
             highlight: '#7ADD1E',
             label: 'Free'
@@ -72,14 +106,21 @@ class StatMachine {
 }
 
 /*
-Represents a single remote server AKA whole pie chart.
-Don't send this to clients, it has the IP address of remote server.
+Represents a remote server.
+*/
+interface IRemoteServerConnection {
+    ip: string;
+    info: IRemoteServerInfo;
+}
+
+/*
+Information about a remote server.
 */
 interface IRemoteServerInfo {
     name: string;
-    ip: string;
     isDown: boolean;
-    data: ISingleDataPart[];
+    cpu: ISingleDataPart[];
+    mem: ISingleDataPart[];
 }
 
 /*
@@ -91,3 +132,8 @@ interface ISingleDataPart {
     highlight: string;
     label: string;
 }
+
+/*
+Export the stat machine to be used.
+*/
+module.exports = StatMachine;
