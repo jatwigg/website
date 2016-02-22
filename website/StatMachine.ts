@@ -19,7 +19,7 @@ class StatMachine {
                 name: 'Local (test1)',
                 isDown: false,
                 cpu: this.getDummyData(10,10),
-                mem: this.getDummyData(10,100)
+                mem: this.getDummyData(78392373, 3131000000)
             }
         },
         {
