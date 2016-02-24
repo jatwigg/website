@@ -8,48 +8,43 @@ import os = require('os');
 
 export function index(req: express.Request, res: express.Response) {
 
-    //var cpus = os.cpus();
+    // todo: get this data from the system
 
-    //for (var i = 0, len = cpus.length; i < len; i++) {
-    //    console.log("CPU %s:", i);
-    //    var cpu = cpus[i], total = 0;
-    //    for (var type in cpu.times)
-    //        total += cpu.times[type];
-
-    //    for (type in cpu.times)
-    //        console.log("\t", type, Math.round(100 * cpu.times[type] / total));
-    //}
-    cpu_used();
-
-    var data = {
-        mem: os.loadavg(),
-        cpu: os.cpus()
+    var data: IJsonDataFormat = {
+        mem: {
+            totalgig: 16,
+            usedgig: 3.5
+        },
+        cpus: [
+            {
+                name: 'Pentium 2 (core 1)',
+                totalghz: 3.3,
+                usedghz: 1.2
+            },
+            {
+                name: 'Pentium 2 (core 2)',
+                totalghz: 3.3,
+                usedghz: 1.2
+            }
+        ]
     };
 
     res.type('application/json');
     res.json(data);
 };
 
-var cpu_used = function () {
-    var cpu = os.cpus();
+interface IJsonDataFormat {
+    mem: IJsonDataMemSection;
+    cpus: IJsonDataCpuSection[];
+}
 
-    var counter = 0;
-    var total = 0;
+interface IJsonDataCpuSection {
+    name: string;
+    totalghz: number;
+    usedghz: number;
+}
 
-    var free = 0;
-    var sys = 0;
-    var user = 0;
-
-    for (var i = 0; i < cpu.length; i++) {
-
-        counter++;
-        total = cpu[i].times.idle + cpu[i].times.sys + cpu[i].times.user + cpu[i].times.irq + cpu[i].times.nice;
-
-        free += 100 * (cpu[i].times.idle / total);
-        sys += 100 * (cpu[i].times.sys / total);
-        user += 100 * (cpu[i].times.user / total);
-    };
-
-    console.log('CPU %s : %s + %s + %s', i, (free / counter), (user / counter), (sys / counter));
-
+interface IJsonDataMemSection {
+    totalgig: number;
+    usedgig: number;
 }
