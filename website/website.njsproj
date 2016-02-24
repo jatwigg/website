@@ -34,12 +34,13 @@
   </PropertyGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app.ts" />
+    <TypeScriptCompile Include="routes\statspage\IJsonDataFormat.ts" />
     <TypeScriptCompile Include="routes\index.ts" />
+    <TypeScriptCompile Include="routes\statspage\index.ts" />
     <TypeScriptCompile Include="Scripts\typings\chartjs\chart.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\express\express.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\node\node.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\stylus\stylus.d.ts" />
-    <TypeScriptCompile Include="StatMachine.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="public\javascripts\bootstrap.js" />
@@ -79,6 +80,7 @@
     <Folder Include="public\javascripts\" />
     <Folder Include="public\stylesheets\" />
     <Folder Include="routes\" />
+    <Folder Include="routes\statspage\" />
     <Folder Include="Scripts\" />
     <Folder Include="Scripts\typings\" />
     <Folder Include="Scripts\typings\chartjs\" />

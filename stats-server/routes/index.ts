@@ -1,4 +1,5 @@
-﻿/*
+﻿/// <reference path="IJsonDataFormat.ts" />
+/*
  * GET home page.
  */
 import express = require('express');
@@ -32,19 +33,3 @@ export function index(req: express.Request, res: express.Response) {
     res.type('application/json');
     res.json(data);
 };
-
-interface IJsonDataFormat {
-    mem: IJsonDataMemSection;
-    cpus: IJsonDataCpuSection[];
-}
-
-interface IJsonDataCpuSection {
-    name: string;
-    totalghz: number;
-    usedghz: number;
-}
-
-interface IJsonDataMemSection {
-    totalgig: number;
-    usedgig: number;
-}
