@@ -7,7 +7,7 @@ block content
   - var noOfLines = 2;
   - var size = (100 / (statdata.length / noOfLines))
   each item, i in servers
-    div(style='width: '+(size)+'%; height: '+(size)+'%; float: left;')= item.name+'!'
+    div(id='server_section_'+i style='width: '+(size)+'%; height: '+(size)+'%; float: left;')
       - var chartdata = JSON.stringify(item);
       h1 #{item.name}
       canvas(id='chart'+i, style='border:1px solid #000;')

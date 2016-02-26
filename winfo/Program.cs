@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.Devices;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management;
@@ -45,7 +46,7 @@ namespace winfo
                     foreach (ManagementObject queryObj in searcher.Get())
                     {
                         string name = (string)queryObj["Name"];
-                        UInt64 time = (UInt64)queryObj["PercentProcessorTime"]; //todo find out what time this is ...
+                        UInt64 time = (UInt64)queryObj["PercentProcessorTime"];
 
                         string processorNumber = name.Split(',')[0];
                         int processorNumberAsInt = int.Parse(processorNumber);
@@ -66,9 +67,16 @@ namespace winfo
                     }
                 }
 
+                // get RAM
+                ComputerInfo c = new ComputerInfo();
+                ulong memTotal = c.TotalPhysicalMemory;
+                ulong memUsed = memTotal - c.AvailablePhysicalMemory;
+
+                // dump to console as expected json
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
-                var o = new { success = true, processors = processors };
+                var o = new { success = true, processors = processors, memory = new { totalgig = (memTotal / 1073741824d), usedgig = (memUsed / 1073741824d) }, exception = string.Empty };
                 Console.WriteLine(serializer.Serialize(o));
+                string s = serializer.Serialize(o);
             }
             catch (Exception e)
             {

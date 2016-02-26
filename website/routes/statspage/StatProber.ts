@@ -43,13 +43,13 @@ export class StatProber {
                     cpuInfo.push({
                         value: cpu.load > 100 ? 100 : (cpu.load < 0 ? 0 : cpu.load),
                         color: '#FF0000',
-                        highlight: '#FFFFFF',
+                        highlight: '#FF8000',
                         label: cpu.name + ' Load'
                     });
                     cpuInfo.push({
-                        value: cpu.load > 100 ? 0 : (cpu.load < 0 ? 100 : cpu.load),
+                        value: cpu.load > 100 ? 0 : (cpu.load < 0 ? 100 : 100 - cpu.load),
                         color: '#00FF00',
-                        highlight: '#FFFFFF',
+                        highlight: '#00FF80',
                         label: cpu.name + 'Free'
                     });
                 }
