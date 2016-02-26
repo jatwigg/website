@@ -19,13 +19,11 @@ export function index(req: express.Request, res: express.Response) {
         cpus: [
             {
                 name: 'Pentium 2 (core 1)',
-                totalghz: 3.3,
-                usedghz: 1.2
+                load: 35
             },
             {
                 name: 'Pentium 2 (core 2)',
-                totalghz: 3.3,
-                usedghz: 1.2
+                load: 55
             }
         ]
     };

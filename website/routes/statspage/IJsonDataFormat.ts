@@ -5,8 +5,7 @@
 
 interface IJsonDataCpuSection {
     name: string;
-    totalghz: number;
-    usedghz: number;
+    load: number;
 }
 
 interface IJsonDataMemSection {

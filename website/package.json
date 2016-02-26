@@ -11,6 +11,7 @@
     "chart.js": "^1.0.2",
     "express": "3.4.4",
     "jade": "*",
+    "request": "^2.69.0",
     "stylus": "*"
   }
 }
